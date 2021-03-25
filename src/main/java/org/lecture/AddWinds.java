@@ -1,9 +1,10 @@
 package org.lecture;
 
+import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.lang.*;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.google.gson.Gson;
 
 import static java.lang.Float.parseFloat;
 
@@ -51,16 +51,13 @@ public class AddWinds {
         if (speed.matches(reg)) {
             if (speed.contains(",")) {
                 speed = speed.replace(",", ".");
-                parsedSpeed = parseFloat(speed);
-            } else {
-                parsedSpeed = parseFloat(speed);
             }
         } else {
             System.out.println("uhoh, something went wrong please try again");
             System.exit(1);
         }
 
-        newEntry.setUserSpeed(parsedSpeed);
+        newEntry.setUserSpeed(speed);
 
         LocalDateTime myTime = LocalDateTime.now();
         //from w3school on formatting Date
@@ -110,10 +107,8 @@ public class AddWinds {
         if (check.equals("yes")) {
             System.out.println("Please enter temperature");
             temp = userIn.nextFloat();
-        } else {
-            temp = 0;
         }
-        //userIn.close();
+
 
         newEntry.setUserTemp(temp);
 
@@ -141,7 +136,7 @@ public class AddWinds {
         //iteratre through existing entries
         //turn into objects
         //give len and entries with him and return collection
-        for (int i = 1; i <= len; i++) {
+        for (int i = 1; i < len; i++) {
             sampleEntry = "wind-" + i;
             JSONObject windJSON = (JSONObject) entries.get(sampleEntry);
             items.add(windJSON);
@@ -164,22 +159,16 @@ public class AddWinds {
             System.out.println("Station: " + mandatory.getStation() + " | direction: " + option.getDirection() + " | weather: " + option.getWeather() + " | temperature: " + option.getTemp());
 
             //hier die knoten und die beaufort ausgeben
-/*
-
             try {
-
-                String kmh = mandatory.getSpeed();
-                float knot;
-                float kmhFl = Float.parseFloat(kmh);
-                knot = (int) (kmhFl * 0.53996);
+                String speedStr = mandatory.getSpeed();
+                System.out.println(speedStr);
+                Float knot = Float.valueOf(speedStr);
                 System.out.println("Die Knoten sind: " + knot);
                 int beau = (int) ((knot + 5) / 5);
                 System.out.println("Beaufort Skala: " + beau);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (NumberFormatException exp) {
+                exp.printStackTrace();
             }
- */
 
 
         }
@@ -192,23 +181,21 @@ public class AddWinds {
     /**
      * -------------------------Output User Input Start---------------------------------------------
      *
-     * @param entries
+     * @param allEntries
      * @param items
      * @param len
      */
 
-    public static void outPutUser(ArrayList<Input> entries, Collection<JSONObject> items, int len) {
+    public static void outPutUser(ArrayList<Input> allEntries, Collection<JSONObject> items, int len) {
         //Useroutput
         String name = "wind-";
-        ArrayList<Input> allEntries = entries;
-
+        int size = allEntries.size() + items.size();
         for (int i = 0; i < allEntries.size(); i++) {
             System.out.println("--------------------------");
             System.out.println(name + len);
             //Print userInput
             System.out.println("ID: " + allEntries.get(i).getUserId() + " | km/h:" + allEntries.get(i).getUserSpeed() + " | time: " + allEntries.get(i).getUserDate());
             System.out.println("Station: " + allEntries.get(i).getUserStation() + " | direction: " + allEntries.get(i).getUserDirection() + " | weather: " + allEntries.get(i).getUserWeather() + " | temperature: " + allEntries.get(i).getUserTemp());
-
 
             try {
                 Gson inputGson = new Gson();
@@ -220,8 +207,6 @@ public class AddWinds {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
         Gson allObj = new Gson();
         String allObjStr = allObj.toJson(items);
@@ -323,7 +308,8 @@ public class AddWinds {
             if (showEntries==1) {
                 items = outputAll(entries, len);
 
-                System.out.println(items);
+                //System.out.println(items);
+                System.out.println(allEntries);
                 outPutUser(allEntries, items, len);
             } else {
                 System.exit(0);

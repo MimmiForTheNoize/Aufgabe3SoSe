@@ -15,7 +15,7 @@ public class Input {
 
      */
 
-    private float userSpeed;
+    private String userSpeed;
     private String userDate;
     private String userStation;
     private Direction userDirection;//maybe enum???
@@ -23,11 +23,11 @@ public class Input {
     private float userTemp;
     private int userId;
 
-    public float getUserSpeed() {
+    public String getUserSpeed() {
         return userSpeed;
     }
 
-    public void setUserSpeed(float userSpeed) {
+    public void setUserSpeed(String userSpeed) {
         this.userSpeed = userSpeed;
     }
 
