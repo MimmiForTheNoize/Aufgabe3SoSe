@@ -1,0 +1,36 @@
+Assignment: Windstärken
+
+Laden Sie beim Programmstart alle Windgeschwindigkeiten einmalig aus einer Datei (das Format bestimmen Sie selbst).
+
+Erstellen Sie das Grundgerüst mit dazugehörigen Benutzereingaben um
+- Neue Windgeschwindigkeiten einzufügen
+	- Anzahl der einzufügenden Windgeschwindigkeiten
+	- Erzeugen Sie neue Windgeschwindigkeiten mittels Eingabe über die Konsole. Windgeschwindigkeiten können ebenfalls auch aus
+	einer  Datei gelesen werden.
+	- Windgeschwindigkeit in km/h als Gleitkommazahl (Sowohl Punkt als auch Komma müssen funktionieren!)
+- Alle Windgeschwindigkeiten ausgeben zu lassen (s.u.)
+- Windgeschwindigkeiten in eine Datei zu schreiben (zusätzlich zu den bereits vorhandenen, nicht das File neu schreiben).
+-
+Zu erfassende Werte:
+Eine fortlaufende ID (unter Einbeziehung der geladenen Werte), die Windgeschwindigkeit in km/h. Datum und lokale Uhrzeit der Eingabe.
+Die Messtation wird verpflichtend erfasst, die Außentemperatur in °C ist optional.
+Wenn vorhanden, wird auch die Windrichtung abgespeichtert (N, NO, O, SO, S, SW, W, NW). Ebenso kann die allgemeine Wetterlage
+(sonnig, bewölkt, nebelig, Regen, Schnee) erfasst werden. Per default wird davon ausgegangen, dass es bewölkt ist.
+
+
+Ausgaben:
+- Windgeschwindigkeiten können aufsteigend nach ID ausgegeben.
+- Es können die Extremwerte ausgegeben werden (Winstille oder Orkan)
+
+Definitionen:
+Windstill: < 2 km/h
+Orkan: >= 120km/h
+
+Für jede Windgeschwindigkeit in km/h berechnen Sie Knoten (km/h*0,53996) und Beaufort ((Knoten + 5)/5) unter Beachtung der Skala
+
+Das Datum soll wie folgt formatiert werden: 13.03.2021 14:15:36 -> "dd.MM.yyyy HH:mm:ss"
+
+Ausgabe der Windgeschwinigkeit umfasst alle Parameter mit einem sinnvollen Text. Wenn es windstill ist oder ein Orkan herrscht,
+soll dies ausgegeben werden
+
+Denken Sie an Menüführung, CleanCode Rules, Design Patterns, Unit Tests und Javadoc!

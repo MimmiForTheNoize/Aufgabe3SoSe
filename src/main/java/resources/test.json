@@ -1,0 +1,38 @@
+{
+{
+  "date":"01.01.2020 23:00:00",
+  "temp":-5,
+  "station":"firstStation",
+  "weather":"sunny",
+  "id":1,
+  "speed":"15.5",
+  "direction":"N"
+},
+{
+"date":"02.01.2020 10:00:00",
+"temp":3.4,
+"station":"secondStation",
+"weather":"cloudy",
+"id":2,
+"speed":"6.5",
+"direction":"S"
+},
+{
+"date":"03.01.2020 15:30:00",
+"temp":3.4,
+"station":"thirdStation",
+"weather":"snow",
+"id":3,
+"speed":"-1",
+"direction":"SW"
+},
+{
+"userTemp":5.0,
+"userStation":"asedf",
+"userDirection":"S",
+"userWeather":"sunny",
+"userSpeed":5.0,
+"userId":4,
+"userDate":"24.03.2021 22:15:46"
+}
+}
