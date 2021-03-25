@@ -1,2 +1,7 @@
 # Project exclude paths
 /target/
+.idea/vcs.xml
+.idea/project-template.xml
+.idea/modules.xml
+*.xml
+.idea/description.html

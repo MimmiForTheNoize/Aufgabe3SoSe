@@ -3,7 +3,7 @@ package org.lecture;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import java.lang.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.google.gson.Gson;
+
+import static java.lang.Float.parseFloat;
 
 public class AddWinds {
 
@@ -49,9 +51,9 @@ public class AddWinds {
         if (speed.matches(reg)) {
             if (speed.contains(",")) {
                 speed = speed.replace(",", ".");
-                parsedSpeed = Float.parseFloat(speed);
+                parsedSpeed = parseFloat(speed);
             } else {
-                parsedSpeed = Float.parseFloat(speed);
+                parsedSpeed = parseFloat(speed);
             }
         } else {
             System.out.println("uhoh, something went wrong please try again");
@@ -162,12 +164,23 @@ public class AddWinds {
             System.out.println("Station: " + mandatory.getStation() + " | direction: " + option.getDirection() + " | weather: " + option.getWeather() + " | temperature: " + option.getTemp());
 
             //hier die knoten und die beaufort ausgeben
-            //fuck it no methods inside another class
-            float kmh = Float.parseFloat(mandatory.getSpeed());
-            int knot = (int) (kmh * 0.53996);
-            System.out.println("Die Knoten sind: " + knot);
-            int beau = ((knot + 5) / 5);
-            System.out.println("Beaufort Skala: " + beau);
+/*
+
+            try {
+
+                String kmh = mandatory.getSpeed();
+                float knot;
+                float kmhFl = Float.parseFloat(kmh);
+                knot = (int) (kmhFl * 0.53996);
+                System.out.println("Die Knoten sind: " + knot);
+                int beau = (int) ((knot + 5) / 5);
+                System.out.println("Beaufort Skala: " + beau);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+ */
+
 
         }
         return items;
@@ -184,7 +197,7 @@ public class AddWinds {
      * @param len
      */
 
-    public static void outPutUser(ArrayList<Input> entries, Collection<JSONObject> items, int len) throws ParseException {
+    public static void outPutUser(ArrayList<Input> entries, Collection<JSONObject> items, int len) {
         //Useroutput
         String name = "wind-";
         ArrayList<Input> allEntries = entries;
@@ -196,11 +209,18 @@ public class AddWinds {
             System.out.println("ID: " + allEntries.get(i).getUserId() + " | km/h:" + allEntries.get(i).getUserSpeed() + " | time: " + allEntries.get(i).getUserDate());
             System.out.println("Station: " + allEntries.get(i).getUserStation() + " | direction: " + allEntries.get(i).getUserDirection() + " | weather: " + allEntries.get(i).getUserWeather() + " | temperature: " + allEntries.get(i).getUserTemp());
 
-            Gson inputGson = new Gson();
-            String inputJson = inputGson.toJson(allEntries.get(i));
-            JSONParser parser = new JSONParser();
-            JSONObject entryJson = (JSONObject) parser.parse(inputJson);
-            items.add(entryJson);
+
+            try {
+                Gson inputGson = new Gson();
+                String inputJson = inputGson.toJson(allEntries.get(i));
+                JSONParser parser = new JSONParser();
+                JSONObject entryJson = (JSONObject) parser.parse(inputJson);
+                items.add(entryJson);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         }
         Gson allObj = new Gson();
@@ -298,7 +318,6 @@ public class AddWinds {
                 """);
 
         try {
-
             int showEntries=0;
             showEntries = sc.nextInt();
             if (showEntries==1) {
@@ -314,8 +333,6 @@ public class AddWinds {
             ex.printStackTrace();
 
         }
-
-
 
         /**
          * -------------------------End-------------------------------------------------
