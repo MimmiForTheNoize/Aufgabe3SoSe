@@ -1,1 +1,28 @@
-{"wind-1":{"date":"01.01.2020 23:00:00","temp":-5,"station":"firstStation","weather":"sunny","id":1,"speed":"15.5","direction":"N"},"wind-2":{"date":"02.01.2020 10:00:00","temp":3.4,"station":"secondStation","weather":"cloudy","id":2,"speed":"6.5","direction":"S"},"wind-3":{"userTemp":6.0,"userStation":"aaaaaaa","userDirection":"N","userWeather":"cloudy","userSpeed":"36","userId":4,"userDate":"25.03.2021 14:21:47"}}
+{
+  "winds": [
+    {
+      "date": "01.01.2020 23:00:00",
+      "temp": -5,
+      "station": "firstStation",
+      "weather": "sunny",
+      "speed": "15.5",
+      "direction": "N"
+    },
+    {
+      "date": "02.01.2020 10:00:00",
+      "temp": 3.4,
+      "station": "secondStation",
+      "weather": "cloudy",
+      "speed": "6.5",
+      "direction": "S"
+    },
+    {
+      "temp": 13.0,
+      "station": "ssssss",
+      "direction": "NaN",
+      "weather": "cloudy",
+      "speed": "7",
+      "date": "25.03.2021 17:19:23"
+    }
+  ]
+}
