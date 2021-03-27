@@ -1,0 +1,1 @@
+{"winds":[{"id":1,"speed":"15.5","date":"01.01.2020 23:00:00","station":"firstStation","direction":"N","weather":"sunny","temp":-5.0,"knots":8.36938,"beaufort":2.673876}]}

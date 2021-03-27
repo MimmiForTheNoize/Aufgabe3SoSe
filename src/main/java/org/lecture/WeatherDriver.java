@@ -1,10 +1,8 @@
 package org.lecture;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The Driver class lets the user select if she/he wants to start the program
+ * It explains the process then lets the user input mandatory and optional values
+ * The user may input the values in the console or load a file with them in it.
+ * At the end it lets the user decide if he wants to see the output.
+ * And it lets the user decide if she/he wants to save it in the file or not.
+ * @name Lisa Allacher
+ * @version 2.0
+ */
+
+
 public class WeatherDriver {
 
     private static final List<Weather> weatherList = new ArrayList<>();
@@ -22,12 +31,31 @@ public class WeatherDriver {
         String path = "src/main/java/resources/wind.json";
         String content = readFile(path);
         parseJson(content);
+        Weather.WeatherBuilder wb = null;
 
         /**
          * -------------------------Start-------------------------------------------------
          *
          */
+        //Function for User Input
+        Weather.WeatherBuilder test = userInput(wb, path);
+        System.exit(0);
 
+        /**
+         * -------------------------End-------------------------------------------------
+         *
+         */
+
+
+    }
+
+    /**
+     *
+     * @param wb = weather Object
+     * @param path = path to file
+     * @return wb Object
+     */
+    public static Weather.WeatherBuilder userInput(Weather.WeatherBuilder wb, String path) {
         System.out.println("This is a program where you can add your wind speeds into a data base");
         System.out.println("""
                 -----------------------------------------------------------
@@ -52,7 +80,6 @@ public class WeatherDriver {
                     -----------------------------------------------------------
                     """);
 
-            //Array of User Input
 
             System.out.println("*****************************************");
             System.out.println("""
@@ -73,10 +100,12 @@ public class WeatherDriver {
 
 
                 for (int i = 0; i < loops; i++) {
-                    Weather.WeatherBuilder wb = new Weather.WeatherBuilder();
+                    wb = new Weather.WeatherBuilder();
                     System.out.println("Entry: " + i);
                     System.out.println("Please enter speed: ");
                     wb.withSpeed(sc.nextLine());
+
+
                     System.out.println("Please enter station: ");
                     wb.withStation(sc.nextLine());
                     System.out.println("Would you like to enter a direction? Enter yes or no");
@@ -106,8 +135,6 @@ public class WeatherDriver {
                     weatherList.add(weather);
                 }
             }
-
-
         }
 
         System.out.println("""
@@ -122,7 +149,6 @@ public class WeatherDriver {
             for (Weather data : weatherList) {
                 System.out.println(data.toString());
             }
-
             System.out.println("""
                     -----------------------------------------------------------
                     Would you like to write entries back to file?
@@ -131,52 +157,77 @@ public class WeatherDriver {
                             """);
             String ansewrWriteToFile = sc.nextLine();
             if (ansewrWriteToFile.equals("1")) {
-                addToFile();
+                String strPath = path;
+                addToFile(strPath);
             }
-
         }
-        System.exit(0);
-
-
+        //returns the new Object wb
+        return wb;
     }
 
-    private static String readFile(String path) {
+    /**
+     *
+     * @param path = path to file
+     * @return returns the Content of file as a String
+     */
+    public static String readFile(String path) {
         Path convertedPath = Paths.get(path);
         String content = null;
         try {
+            //read json file
             content = Files.readString(convertedPath);
         } catch (IOException e) {
             System.out.println("Error! Try again.");
         }
+        System.out.println(content);
         return content;
     }
 
-    private static void parseJson(String content) {
+    /**
+     *
+     * @param content String with content from file
+     * @return returns true or false if the size of the array has changed
+     */
+    public static boolean parseJson(String content) {
         //create JSON object
         Gson gson = new Gson();
         JsonObject jsob = gson.fromJson(content, JsonObject.class);
         JsonArray jsonArray = gson.fromJson(jsob.get("winds"), JsonArray.class);
+        int outsideIterator = 0;
+        //weatherlist = Array with entries
+        int sizeOutside = weatherList.size();
 
-
-
+        //transform userInput into weather Object
         for (int i = 0; i < jsonArray.size(); i++) {
             int size = weatherList.size();
             JsonObject windJSON = (JsonObject) jsonArray.get(i);
             String windObjectJson = windJSON.toString();
 
             Weather weather = gson.fromJson(windObjectJson, Weather.WeatherBuilder.class).withId(size + 1).build();
-            weatherList.add(weather);
-        }
 
+            weatherList.add(weather);
+            outsideIterator++;
+        }
+        if(weatherList.size() == sizeOutside+outsideIterator) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public static void addToFile() {
+    /**
+     *
+     * @param strPath = path
+     * reads entries into file
+     */
+    public static void addToFile(String strPath) {
         Gson gson = new Gson();
         try {
-            //addtoFile
-            FileWriter file = new FileWriter("src/main/java/resources/wind.json", false);
+            //addtoFile (overwriting)
+            FileWriter file = new FileWriter(strPath, false);
             String output = gson.toJson(weatherList, new TypeToken<List<Weather>>() {
             }.getType());
+
             String start = "{\"winds\":";
             String end = "}";
             String toWrite= start + output + end;
@@ -190,4 +241,6 @@ public class WeatherDriver {
         }
 
     }
+
+
 }
