@@ -32,18 +32,6 @@ public class WeatherDriverTest {
     @Test
     public void testUserInput() {
 
-  /*
-        Weather weather = new Weather.WeatherBuilder()
-                .withId(9)
-                .withSpeed("2.5")
-                .withStation("TestStation")
-                .withWeather("testweather")
-                .withDirection("W")
-                .withTemp((float) 15.2)
-                .build();
-
-        String weatherStr = weather.toString();
-   */
 
         //simulate input
         String input =
@@ -100,30 +88,6 @@ public class WeatherDriverTest {
         FileWriter file = new FileWriter("src/test/java/resources/TDD.txt", false);
 
     }
-
-/*
- public static void addToFile() {
-        Gson gson = new Gson();
-        try {
-            //addtoFile
-            FileWriter file = new FileWriter("src/main/java/resources/wind.json", false);
-            String output = gson.toJson(weatherList, new TypeToken<List<Weather>>() {
-            }.getType());
-
-            String start = "{\"winds\":";
-            String end = "}";
-            String toWrite= start + output + end;
-            int i = 1;
-            file.write(toWrite);
-
-            file.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
- */
 
 
     @Test

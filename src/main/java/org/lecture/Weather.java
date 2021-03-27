@@ -130,6 +130,11 @@ public class Weather {
             return this;
         }
 
+        /**
+         * Build Method
+         * formats the date into a readable format
+         * @return returns Object
+         */
         public Weather build() {
             if (weather == null) {
                 this.weather = "cloudy";
